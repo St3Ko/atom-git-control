@@ -9,6 +9,7 @@ views = []
 view = undefined
 pane = undefined
 item = undefined
+lastItem = undefined
 
 module.exports = GitControl =
 
@@ -26,20 +27,25 @@ module.exports = GitControl =
 
   toggleView: ->
     console.log 'GitControl: toggle'
+    pane = atom.workspace.getActivePane()
 
     unless view and view.active
+      lastItem = pane.getActiveItem()
+
       view = new GitControlView()
       views.push view
 
-      pane = atom.workspace.getActivePane()
       item = pane.addItem view, 0
 
       pane.activateItem item
+      view.compareMenuClick()
 
     else
       pane.destroyItem item
+      pane.activateItem lastItem
 
     return
+
 
   updatePaths: ->
      git.setProjectIndex(0)
