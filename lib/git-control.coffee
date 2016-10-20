@@ -43,6 +43,8 @@ module.exports = GitControl =
     else
       pane.destroyItem item
       pane.activateItem lastItem
+      pane.activate()
+
 
     return
 
